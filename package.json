@@ -1,0 +1,19 @@
+{
+  "name": "centuries",
+  "version": "0.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/coraunderhill/centuries.git"
+  },
+  "author": "coraunderhill",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/coraunderhill/centuries/issues"
+  },
+  "homepage": "https://github.com/coraunderhill/centuries#readme",
+  "description": ""
+}
