@@ -1,19 +1,23 @@
 {
   "name": "centuries",
   "version": "0.0.0",
-  "main": "index.js",
+  "main": "src/index.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --silent=false"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/coraunderhill/centuries.git"
   },
-  "author": "coraunderhill",
+  "author": "Cora Underhill <coraunderhill@gmail.com>",
   "license": "GPL-3.0",
   "bugs": {
     "url": "https://github.com/coraunderhill/centuries/issues"
   },
-  "homepage": "https://github.com/coraunderhill/centuries#readme",
-  "description": ""
+  "homepage": "https://github.com/coraunderhill/centuries",
+  "description": "",
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
 }
