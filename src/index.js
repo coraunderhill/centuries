@@ -1,7 +1,7 @@
 /**
  * Outputs the century of a passed number year
- * @param {number} year The number year
- * @returns the passed input
+ * @param {number} year A number representing the Gregorian calendar year (e.g.: 2024)
+ * @returns {number} The year's century according to the Gregorian calendar
  */
 const convert = year => {
 
@@ -42,11 +42,31 @@ const convert = year => {
 }
 
 /**
+ * Parses the year from a passed date string and outputs which century it's in
+ * @param {string} date Valid date-time string
+ * @returns {number} The year's century according to the Gregorian calendar
+ */
+const convertStr = date => {
+
+  /**
+   * Millisecond representation of date input or `NaN` if date input is not a valid string
+   */
+  const parsedDate = Date.parse(date);
+
+  // If the string is valid run the conversion
+  if (!isNaN(parsedDate)) {
+    const dateObj = new Date(parsedDate);
+    return convert(dateObj.getFullYear());
+  }
+  else throw new Error(`${date} is not a valid date-time string`);
+}
+
+/**
  * Outputs what century a Date object, string, or a year represented as a number is in
  * @param {(Date|number|string)} date
  * @param {string} [returnFormat=int] Optional: the format to be used when returning the result.
  * Defaults to `int`
- * @returns {boolean} Currently always returns true. Will change this later
+ * @returns {number} Currently always returns true. Will change this later
  */
 const centuries = (date, returnFormat) => {
 
@@ -54,8 +74,9 @@ const centuries = (date, returnFormat) => {
    * TODO: add strings
    */
   if (typeof date === 'number') return convert(date);
+  else if (typeof date === 'string') return convertStr(date);
   else if (date instanceof Date && Object.prototype.toString.call(date) === '[object Date]') {
-    convert(date.getFullYear());
+    return convert(date.getFullYear());
   }
   else throw new Error(`Input must be a number, valid Date object, or string: received ${type}`);
 
