@@ -1,25 +1,24 @@
-
-
 /**
  * Outputs the century of a passed number year
  * @param {number} year The number year
  * @returns the passed input
  */
-const convertNum = year => {
+const convert = year => {
 
   // Check for zero
   if (year === 0) {
-    throw new Error(`The Gregorian calendar has no year zero.`);
+    throw new Error(`The Gregorian calendar has no year zero`);
   }
 
   // Require whole numbers (or floats that can resolve to a whole number)
   if (year % 1 !== 0) {
-    throw new Error(`${year} is not a whole number.`);
+    throw new Error(`${year} is not a whole number`);
   }
 
   // Require "safe" integers
+  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/isSafeInteger
   if (!Number.isSafeInteger(year)) {
-    throw new Error(`${year} is not considered a safe integer.`);
+    throw new Error(`${year} is not considered a safe integer`);
   }
 
   /**
@@ -37,19 +36,14 @@ const convertNum = year => {
    */
   const century = Math.trunc((adjustedYear / 100) + 1);
 
+  // Years before the common era are negative to differentiate them
   return isCE ? century : -century;
 
 }
 
-const convertStr = input => {
-
-  return input;
-
-}
-
 /**
- * Outputs the century of a number year or date string
- * @param {(number|string)} date A number year or date string
+ * Outputs what century a Date object, string, or a year represented as a number is in
+ * @param {(Date|number|string)} date
  * @param {string} [returnFormat=int] Optional: the format to be used when returning the result.
  * Defaults to `int`
  * @returns {boolean} Currently always returns true. Will change this later
@@ -57,21 +51,13 @@ const convertStr = input => {
 const centuries = (date, returnFormat) => {
 
   /**
-   * `typeof` for input
+   * TODO: add strings
    */
-  const type = typeof date;
-
-  // Check that the type is explicitly a number or a string before continuing
-  if (type !== 'number' && type !== 'string') {
-    throw new Error(`Input must be a number or string: received ${type}`)
+  if (typeof date === 'number') return convert(date);
+  else if (date instanceof Date && Object.prototype.toString.call(date) === '[object Date]') {
+    convert(date.getFullYear());
   }
-
-  /**
-   * The century of the passed input
-   */
-  const century = (type === 'number') ? convertNum(date) : convertStr(date);
-
-  return century;
+  else throw new Error(`Input must be a number, valid Date object, or string: received ${type}`);
 
 };
 
