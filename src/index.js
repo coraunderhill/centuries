@@ -65,9 +65,6 @@ const convertStr = date => {
  */
 const centuries = (date, returnFormat) => {
 
-  /**
-   * TODO: add strings
-   */
   if (typeof date === 'number') return convert(date);
   else if (typeof date === 'string') return convertStr(date);
   else if (date instanceof Date && Object.prototype.toString.call(date) === '[object Date]') {
