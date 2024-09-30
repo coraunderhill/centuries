@@ -5,38 +5,33 @@
  */
 const convert = year => {
 
-  // Check for zero
-  if (year === 0) {
-    throw new Error(`The Gregorian calendar has no year zero`);
-  }
-
-  // Require whole numbers (or floats that can resolve to a whole number)
-  if (year % 1 !== 0) {
-    throw new Error(`${year} is not a whole number`);
-  }
-
   // Require "safe" integers
   // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/isSafeInteger
   if (!Number.isSafeInteger(year)) {
     throw new Error(`${year} is not considered a safe integer`);
   }
 
+  // Require whole numbers (or floats that can resolve to a whole number)
+  if (year !== 0 && year % 1 !== 0) {
+    throw new Error(`${year} is not a whole number`);
+  }
+
   /**
    * Flag indicating if the passed input is in the common era (year 1 forward)
    */
-  const isCE = year > 0;
+  const isCE = year >= 0;
 
   /**
    * Absolute value of input -/+ 1 based on if it's positive or negative, respectively
    */
-  const adjustedYear = (isCE) ? Math.abs(year) - 1 : Math.abs(year) + 1
+  adjustedYear = (isCE) ? --year : ++year;
 
   /**
    * Numeric century of the passed input
    */
-  const century = Math.trunc((adjustedYear / 100) + 1);
+  let century = 1 + Math.trunc(Math.abs(adjustedYear / 100));
 
-  // Years before the common era are negative to differentiate them
+  // Results for before the common era are negative to differentiate them
   return isCE ? century : -century;
 
 }
